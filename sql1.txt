@@ -6,23 +6,62 @@ SELECT * FROM Products LIMIT 5;
 1. Use an SQL SELECT statement to retrieve the first 10 rows of the Customer table, ordered by CustomerName.
 Paste your SQL statement below:
 
+Need to:
+- SELECT all columns,
+- FROM customers,
+- ORDER BY CustomerName,
+- LIMIT 10 rows.
+
+SQL ==> SELECT * FROM Customers ORDER BY CustomerName LIMIT 10;
+
 
 2. Use an SQL Select statement to retrieve the names and prices for all products that cost less than $20.
 Paste your SQL statement below:
 
+Need to:
+- SELECT name, prices,
+- FROM products,
+- WHERE price < $20.
+
+SQL ==> SELECT ProductName, Price FROM products WHERE Price < 20;
+
+
 
 3. Retrieve all employees whose last name starts with C.  Paste your SQL statement below:
+
+Need to:
+- SELECT all columns,
+- FROM Employees,
+- WHERE LastName LIKE 'C%'.
+
+SQL ==> SELECT * FROM Employees WHERE LastName LIKE 'C%';
 
 
 4. Retrieve the order ID and customer name for all orders where the customer name starts with A.
 Here you will have to do a join of the Orders table and the Customers table.  Paste your SQL
 statement below.
 
+Need to:
+- SELECT OrderID FROM Orders,
+- SELECT CustomerName FROM Customers,
+- JOIN Orders and Customers ON Orders.CustomerID = Customers.CustomerID,
+- WHERE CustomerName LIKE 'A%'.
+
+SQL ==> SELECT OrderID, CustomerName FROM Orders JOIN Customers ON Orders.CustomerID = Customers.CustomerID WHERE CustomerName LIKE 'A%';
+
+
 
 5. Retrieve the list of customers, ordered by customer name, along with their order IDs.  Note
 that not every customer has an order, but be sure that you include those customers without orders
 in the results of the query.  Paste your SQL statement below.
 
+Need to:
+- SELECT all columns, all rows FROM Customers,
+- SELECT OrderID column, all rows (NULLs included) FROM Orders,
+- LEFT (OUTER) JOIN Customers and Orders ON Customers.CustomerID = Orders.CustomerID,
+- ORDER BY CustomerName.
+
+SQL ==> SELECT Customers.*, Orders.OrderID FROM Customers LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID ORDER BY CustomerName;
 
 
 6. Retrieve the list of customer names for customers that have no orders.  There are two ways to do this
@@ -33,10 +72,28 @@ SELECT CustomerName FROM Customers WHERE CustomerID NOT IN (SELECT CustomerID FR
 This is a subquery -- we haven't talked about those.  But, you can do the same thing with a left
 join by comparing the OrderID column with NULL.  Paste your SQL statement below.
 
+Need to:
+- SELECT CustomerName column FROM Customers,
+- SELECT OrderID column, NULL only rows FROM Orders:
+- LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID,
+- WHERE OrderID IS NULL,
+
+SQL ==> SELECT c.CustomerName, o.OrderID FROM Customers AS c  LEFT JOIN Orders AS o ON c.CustomerID = o.CustomerID WHERE o.OrderID IS NULL;
 
 
 7. Retrieve the OrderID and ProductName of every order for a product with Tofu in the name.
 Paste your SQL statement below.  You will have to join Orders, OrderDetails, and Products.
+
+Need to:
+- SELECT o.OrderID column FROM Orders AS o,
+- SELECT p.ProductName column FROM Products AS p, WHERE p.ProductName LIKE '%Tofu%',
+- JOIN OrderDetails AS od ON o.OrderID = od.OrderID,
+- JOIN Products AS p ON od.ProductID = p.ProductID.
+
+SQL ==> SELECT o.OrderID, p.ProductName FROM Orders AS o JOIN OrderDetails AS od ON o.OrderID = od.OrderID JOIN Products AS p ON od.ProductID = p.ProductID WHERE p.ProductName LIKE '%Tofu%';
+
+SQL ==> SELECT od.OrderID, p.ProductName FROM OrderDetails AS od JOIN Products AS p ON od.ProductID = p.ProductID WHERE p.ProductName LIKE '%Tofu%';
+
 
 
 
