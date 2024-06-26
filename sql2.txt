@@ -41,7 +41,7 @@ Need:
     where OrderDetails.OrderID = Orders.OrderID, where Orders.CustomerID = Customers.CustomerID
 - TotalQuantity: for each row with ProductName from Products table a row of Quantity column from OrderDetails table matching on Products.ProductID = OrderDetails.ProductID
 
-SQL ==> SELECT c.CustomerName, p.ProductName, od.Quantity AS TotalQuantity FROM Customers AS c FULL JOIN Orders AS o ON c.CustomerID = o.CustomerID FULL JOIN OrderDetails AS od ON o.OrderID = od.OrderID FULL JOIN Products AS p ON od.ProductID = p.ProductID GROUP BY c.CustomerID, p.ProductID ORDER BY c.CustomerName, p.ProductName;
+SQL ==> SELECT c.CustomerName, p.ProductName, SUM(od.Quantity) AS TotalQuantity FROM Customers AS c FULL JOIN Orders AS o ON c.CustomerID = o.CustomerID FULL JOIN OrderDetails AS od ON o.OrderID = od.OrderID FULL JOIN Products AS p ON od.ProductID = p.ProductID GROUP BY c.CustomerID, p.ProductID ORDER BY c.CustomerName, p.ProductName;
 
 
 4. Extend the previous query to give the total price as well as the customer name, product name, 
